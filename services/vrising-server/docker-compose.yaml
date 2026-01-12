@@ -1,0 +1,24 @@
+services:
+  vrising:
+    image: trueosiris/vrising
+    environment:
+      - TZ=Europe/Paris
+      - SERVERNAME=buceia
+    volumes:
+      - type: bind
+        source: ../../data/vrising/server
+        target: /mnt/vrising/server
+        bind:
+          create_host_path: true
+      - type: bind
+        source: ../../data/vrising/persistentdata
+        target: /mnt/vrising/persistentdata
+        bind:
+          create_host_path: true
+    ports:
+      - '9876:9876/udp'
+      - '9877:9877/udp'
+      - '9090:9090'
+    restart: unless-stopped
+    network_mode: bridge
+

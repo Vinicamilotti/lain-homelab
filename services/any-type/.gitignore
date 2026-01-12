@@ -1,0 +1,6 @@
+.DS_Store
+/etc/
+/storage/
+/repos/
+/account_stop.json
+/backup/

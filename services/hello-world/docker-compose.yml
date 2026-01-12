@@ -1,0 +1,7 @@
+services:
+  hello-world:
+    build: .
+    container_name: hello-world
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
