@@ -1,0 +1,52 @@
+{
+  "autostart": {
+    "13ft": {
+      "path": "/home/space-cowboy/stack/services/13ft",
+      "tracked": true
+    },
+    "any-type": {
+      "path": "/home/space-cowboy/stack/services/any-type",
+      "tracked": false
+    },
+    "foundry": {
+      "path": "/home/space-cowboy/stack/services/foundry",
+      "tracked": false
+    },
+    "guacamole": {
+      "path": "/home/space-cowboy/stack/services/guacamole",
+      "tracked": false
+    },
+    "hello-world": {
+      "path": "/home/space-cowboy/stack/services/hello-world",
+      "tracked": true
+    },
+    "jellyfin": {
+      "path": "/home/space-cowboy/stack/services/jellyfin",
+      "tracked": true
+    },
+    "nginx-pm": {
+      "path": "/home/space-cowboy/stack/services/nginx-pm",
+      "tracked": true
+    },
+    "pihole": {
+      "path": "/home/space-cowboy/stack/services/pihole",
+      "tracked": true
+    },
+    "portainer": {
+      "path": "/home/space-cowboy/stack/services/portainer",
+      "tracked": false
+    },
+    "sonnar": {
+      "path": "/home/space-cowboy/stack/services/sonnar",
+      "tracked": false
+    },
+    "vrising-server": {
+      "path": "/home/space-cowboy/stack/services/vrising-server",
+      "tracked": true
+    },
+    "xyops": {
+      "path": "/home/space-cowboy/stack/services/xyops",
+      "tracked": true
+    }
+  }
+}
