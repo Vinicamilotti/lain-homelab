@@ -21,3 +21,6 @@ services:
     ports:
       - "5522:5522"
       - "5523:5523"
+    labels:
+      - io.portainer.accesscontrol.public
+

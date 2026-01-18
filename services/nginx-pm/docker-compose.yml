@@ -12,3 +12,6 @@ services:
     volumes:
       - ../../data/nginx-pm/data:/data
       - ../../data/nginx-pm/letsencrypt:/etc/letsencrypt
+    labels:
+      - io.portainer.accesscontrol.public
+

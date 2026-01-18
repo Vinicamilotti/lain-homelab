@@ -36,3 +36,6 @@ services:
       # Optional, if Pi-hole should get some more processing time
       - SYS_NICE
     restart: unless-stopped
+    labels:
+      - io.portainer.accesscontrol.public
+

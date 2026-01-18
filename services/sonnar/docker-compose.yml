@@ -15,3 +15,5 @@ services:
     ports:
       - 8765:8989
     restart: unless-stopped
+    labels:
+      - io.portainer.accesscontrol.public

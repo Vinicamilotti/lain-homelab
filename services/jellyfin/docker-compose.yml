@@ -21,4 +21,7 @@ services:
         source: ../../data/multimedia/manga
         target: /manga
     restart: 'unless-stopped'
+    labels:
+      - io.portainer.accesscontrol.public
+
   

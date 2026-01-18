@@ -31,6 +31,9 @@ services:
             romm-db:
                 condition: service_healthy
                 restart: true
+        labels:
+         - io.portainer.accesscontrol.public
+
 
     romm-db:
         image: mariadb:latest
@@ -50,3 +53,6 @@ services:
             interval: 10s
             timeout: 5s
             retries: 5
+        labels:
+         - io.portainer.accesscontrol.public
+
