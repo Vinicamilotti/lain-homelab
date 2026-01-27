@@ -1,0 +1,21 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ee:latest
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.home'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'https://gitlab.example.com'
+    ports:
+      - '1234:80'
+      - '1235:443'
+      - '1236:22'
+    volumes:
+      - '../../data/gitlab/etc:/etc/gitlab'
+      - '../../data/gitlab/log/:/var/log/gitlab'
+      - '../../data/gitilab/data:/var/opt/gitlab'
+    shm_size: '256m'
+    labels:
+      - io.portainer.accesscontrol.public

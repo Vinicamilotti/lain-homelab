@@ -12,6 +12,7 @@ services:
       - ../../data/multimedia/movies:/movies #optional
       - ../../data/multimedia/books:/books #optional
       - ../../data/multimedia/movies:/manga #optional
+      - ../../data/deluge/downloads:/downloads #optional
     ports:
       - 8765:8989
     restart: unless-stopped

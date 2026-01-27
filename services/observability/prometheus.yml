@@ -1,0 +1,29 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'nodeexporter'
+    static_configs:
+      - targets: ['192.168.1.200:9093']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['192.168.1.200:8080']
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['192.168.1.200:9091']
+  - job_name: 'pushgateway-scrape'
+    scrape_interval: 60s
+    honor_labels: true
+    static_configs:
+      - targets: ['192.168.1.200:9096']
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets: 
+      - '192.168.1.200:9097'
+
+rule_files:
+  - '/etc/prometheus/rules/alert.rules'

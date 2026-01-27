@@ -1,0 +1,10 @@
+groups:
+  - name: host
+    rules:
+      - alert: DiskSpaceLow
+        expr: sum(node_filesystem_free_bytes{fstype="ext4"}) > 5
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          description: "Diskspace is low!"

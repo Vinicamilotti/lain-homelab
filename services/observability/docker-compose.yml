@@ -1,0 +1,119 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    hostname: prometheus
+    user: root
+    restart: unless-stopped
+    depends_on:
+      - cadvisor
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=240h'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./../../data/observability/prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert.rules:/etc/prometheus/rules/alert.rules
+    ports:
+      - 9091:9090
+    labels:
+      org.label-schema.group: "monitoring"
+      
+
+  # WEB BASED UI VISUALISATION OF METRICS
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    hostname: grafana
+    user: root
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./../../data/observability/grafana_data:/var/lib/grafana
+    ports:
+      - 9092:3000
+    labels:
+      org.label-schema.group: "monitoring"
+
+  # HOST LINUX MACHINE METRICS EXPORTER
+  nodeexporter:
+    image: prom/node-exporter
+    container_name: nodeexporter
+    hostname: nodeexporter
+    restart: unless-stopped
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - 9093:9100
+    labels:
+      org.label-schema.group: "monitoring"
+
+  # DOCKER CONTAINERS METRICS EXPORTER
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    container_name: cadvisor
+    hostname: cadvisor
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+    ports:
+      - 8080:8080
+      - 3001:3000
+    labels:
+      org.label-schema.group: "monitoring"
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    hostname: ntfy
+    env_file: .env
+    restart: unless-stopped
+    command:
+      - serve
+    ports:
+      - "9095:80"
+    volumes:
+      - ../../data/observability/ntfy_cache:/var/cache/ntfy
+      - ../../data/observability/ntfy_etc:/etc/ntfy
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    hostname: pushgateway
+    restart: unless-stopped
+    command:
+      - '--web.enable-admin-api'    
+    ports:
+      - 9096:9091
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
+    container_name: alertmanager
+    hostname: alertmanager
+    user: root
+    restart: unless-stopped
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager.yml
+      - ../../data/observability/alertmanager_data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - 9097:9093
+    labels:
+      org.label-schema.group: "monitoring"
