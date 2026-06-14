@@ -1,0 +1,31 @@
+version: "3.7"
+
+# https://github.com/excalidraw/excalidraw/issues/6506
+
+volumes:
+  notused:
+    driver: local
+
+services:
+  excalidraw-server:
+    container_name: excalidraw
+    image: ./
+    restart: always
+    environment:
+      NODE_ENV: production
+      TZ: ${TZ}
+      PUB_SRV_NAME: draw.${DOMAIN_NAME}
+      PUB_SRV_NAME_WS: draw-ws.${DOMAIN_NAME}
+      REACT_APP_BACKEND_V2_GET_URL: https://draw.${DOMAIN_NAME}/api/v2/
+      REACT_APP_BACKEND_V2_POST_URL: https://draw.${DOMAIN_NAME}/api/v2/post
+      REACT_APP_WS_SERVER_URL: https://draw-ws.${DOMAIN_NAME}/
+    volumes:
+      - notused:/opt/node_app/app/node_modules
+
+  excalidraw-room:
+    container_name: excaliroom
+    image: excalidraw/excalidraw-room:latest
+    restart: always
+    environment:
+      TZ: ${TZ}
+      PORT: 3002
