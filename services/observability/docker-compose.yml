@@ -15,7 +15,7 @@ services:
       - '--storage.tsdb.retention.time=240h'
       - '--web.enable-lifecycle'
     volumes:
-      - ./../../data/observability/prometheus_data:/prometheus
+      - ${DATA_DIR}/observability/prometheus_data:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./alert.rules:/etc/prometheus/rules/alert.rules
     ports:
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ./../../data/observability/grafana_data:/var/lib/grafana
+      - ${DATA_DIR}/observability/grafana_data:/var/lib/grafana
     ports:
       - 9092:3000
     labels:
@@ -90,8 +90,8 @@ services:
     ports:
       - "9095:80"
     volumes:
-      - ../../data/observability/ntfy_cache:/var/cache/ntfy
-      - ../../data/observability/ntfy_etc:/etc/ntfy
+      - ${DATA_DIR}/observability/ntfy_cache:/var/cache/ntfy
+      - ${DATA_DIR}/observability/ntfy_etc:/etc/ntfy
   pushgateway:
     image: prom/pushgateway
     container_name: pushgateway
@@ -109,7 +109,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./alertmanager.yml:/etc/alertmanager.yml
-      - ../../data/observability/alertmanager_data:/alertmanager
+      - ${DATA_DIR}/observability/alertmanager_data:/alertmanager
     command:
       - '--config.file=/etc/alertmanager.yml'
       - '--storage.path=/alertmanager'

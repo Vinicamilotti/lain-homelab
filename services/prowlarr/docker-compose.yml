@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -7,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - ../../data/prowlarr:/config
+      - ${DATA_DIR}/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped

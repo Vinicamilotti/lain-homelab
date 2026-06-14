@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -7,12 +9,12 @@ services:
       - PGID=1000
       - TZ=Americas/Sao_Paulo
     volumes:
-      - ../../data/raddar:/config
-      - ../../data/deluge/downloads:/downloads #optional
-      - ../../data/multimedia/movies:/movies #optional
-      - ../../data/multimedia/series:/series #optional
-      - ../../data/multimedia/manga:/manga #optional
-      - ../../data/multimedia/books:/books #optional
+      - ${DATA_DIR}/raddar:/config
+      - ${DATA_DIR}/deluge/downloads:/downloads #optional
+      - ${DATA_DIR}/multimedia/movies:/movies #optional
+      - ${DATA_DIR}/multimedia/series:/series #optional
+      - ${DATA_DIR}/multimedia/manga:/manga #optional
+      - ${DATA_DIR}/multimedia/books:/books #optional
     ports:
       - 7878:7878
     restart: unless-stopped

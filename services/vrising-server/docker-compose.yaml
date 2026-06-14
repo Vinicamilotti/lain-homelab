@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   vrising:
     image: trueosiris/vrising
@@ -6,12 +8,12 @@ services:
       - SERVERNAME=buceia
     volumes:
       - type: bind
-        source: ../../data/vrising/server
+        source: ${DATA_DIR}/vrising/server
         target: /mnt/vrising/server
         bind:
           create_host_path: true
       - type: bind
-        source: ../../data/vrising/persistentdata
+        source: ${DATA_DIR}/vrising/persistentdata
         target: /mnt/vrising/persistentdata
         bind:
           create_host_path: true

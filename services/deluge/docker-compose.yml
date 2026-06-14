@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   deluge:
     image: lscr.io/linuxserver/deluge:latest
@@ -8,8 +10,8 @@ services:
       - TZ=Americas/Sao_Paulo
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - ../../data/deluge/config:/config
-      - ../../data/deluge/downloads:/downloads
+      - ${DATA_DIR}/deluge/config:/config
+      - ${DATA_DIR}/deluge/downloads:/downloads
     ports:
       - 8112:8112
       - 6881:6881

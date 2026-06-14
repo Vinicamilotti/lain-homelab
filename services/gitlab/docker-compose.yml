@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   gitlab:
     image: gitlab/gitlab-ee:latest
@@ -13,9 +15,9 @@ services:
       - '1235:443'
       - '1236:22'
     volumes:
-      - '../../data/gitlab/etc:/etc/gitlab'
-      - '../../data/gitlab/log/:/var/log/gitlab'
-      - '../../data/gitilab/data:/var/opt/gitlab'
+      - '${DATA_DIR}/gitlab/etc:/etc/gitlab'
+      - '${DATA_DIR}/gitlab/log/:/var/log/gitlab'
+      - '${DATA_DIR}/gitilab/data:/var/opt/gitlab'
     shm_size: '256m'
     labels:
       - io.portainer.accesscontrol.public

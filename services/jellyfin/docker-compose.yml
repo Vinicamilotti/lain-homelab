@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   jellyfin:
     image: jellyfin/jellyfin
@@ -6,19 +8,19 @@ services:
       - 8096:8096/tcp
       - 7359:7359/udp
     volumes:
-      - ../../data/jellyfin/config:/config
-      - ../../data/jellyfin/cache:/cache
+      - ${DATA_DIR}/jellyfin/config:/config
+      - ${DATA_DIR}/jellyfin/cache:/cache
       - type: bind
-        source: ../../data/multimedia/series
+        source: ${DATA_DIR}/multimedia/series
         target: /series
       - type: bind
-        source: ../../data/multimedia/movies
+        source: ${DATA_DIR}/multimedia/movies
         target: /movies
       - type: bind
-        source: ../../data/multimedia/books
+        source: ${DATA_DIR}/multimedia/books
         target: /books
       - type: bind
-        source: ../../data/multimedia/manga
+        source: ${DATA_DIR}/multimedia/manga
         target: /manga
     restart: 'unless-stopped'
     labels:

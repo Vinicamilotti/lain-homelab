@@ -1,3 +1,5 @@
+env_file: ../.env
+
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -10,8 +12,8 @@ services:
       - 81:81
       - 443:443
     volumes:
-      - ../../data/nginx-pm/data:/data
-      - ../../data/nginx-pm/letsencrypt:/etc/letsencrypt
+      - ${DATA_DIR}/nginx-pm/data:/data
+      - ${DATA_DIR}/nginx-pm/letsencrypt:/etc/letsencrypt
     labels:
       - io.portainer.accesscontrol.public
 
